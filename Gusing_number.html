@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        html {
+  font-family: sans-serif;
+}
+
+body {
+  width: 300px;
+  max-width: 750px;
+  min-width: 480px;
+  margin: 0 auto;
+  background-color: #212121;
+}
+
+.lastResult {
+  color: white;
+  padding: 7px;
+}
+
+.guesses {
+  color: white;
+  padding: 7px;
+}
+
+button {
+  background-color: #141414;
+  color: #fff;
+  width: 250px;
+  height: 50px;
+  border-radius: 25px;
+  font-size: 30px;
+  border-style: none;
+  margin-top: 30px;
+  /* margin-left: 50px; */
+}
+
+#subt {
+  background-color: #161616;
+  color: #ffffff;
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 20px;
+  border-style: none;
+  margin-top: 50px;
+  /* margin-left: 75px; */
+}
+
+#guessField {
+  color: #000;
+  width: 250px;
+  height: 50px;
+  font-size: 30px;
+  border-style: none;
+  margin-top: 25px;
+
+  /* margin-left: 50px; */
+  border: 5px solid #6c6d6d;
+  text-align: center;
+}
+
+#guess {
+  font-size: 55px;
+  /* margin-left: 90px; */
+  margin-top: 120px;
+  color: #fff;
+}
+
+.guesses {
+  background-color: #7a7a7a;
+}
+
+#wrapper {
+  box-sizing: border-box;
+  text-align: center;
+  width: 450px;
+  height: 550px;
+  background-color: #474747;
+  color: #fff;
+  font-size: 25px;
+}
+
+h1 {
+  background-color: #161616;
+
+  color: #fff;
+  text-align: center;
+}
+
+p {
+  font-size: 16px;
+  text-align: center;
+}
+
+
+    </style>
+</head>
+<body> 
+<nav>
+<a href="/" aria-current="page">Home</a>
+<a target="_blank" href="https://www.youtube.com/@chaiaurcode">Youtube channel</a>
+</nav>
+
+<div id="wrapper">
+<h1>Number guessing game</h1>
+<p>try and gusess a random number between 1 to 100</p>
+<p>You have 10 attemps to guess the right number</p>
+<br>
+
+
+    
+<form action="">
+<label2 for =" gusessField" id="guess"></label2>
+<input type="text" id="guessField"  class="guessField">
+<input type="submit" id="submit">
+</form>
+<div class="resultParas">
+<p>Previous gusses:<span class= "guesses"> </span> </p>
+<p>guesses Reamining : <span class="lastResult">10</span></p>
+<p class="LowOrHi"></p>
+</div>
+</div>
+<script type="text/javascript">
+   const randnum = parseInt(Math.floor(Math.random() * 100 + 1));
+
+   const submit = document.querySelector('#submit');
+   const user = document.querySelector('#guessField')
+   const guessSlot = document.querySelector('.guesses')
+   const remaining = document.querySelector('.lastResult')
+   const LoworHi = document.querySelector('LowOrHi') 
+    
+   const p = document.createElement('p');
+  let prevGuess = [];
+
+  let playgame = true;
+   
+  let count = 1
+
+
+
+  submit.addEventListener('click',(e)=>{
+   e.preventDefault()
+   const num = parseInt(user.value)
+   validate(num)
+  }) 
+
+function validate(num){
+if(isNaN(num)){
+alert('Please Enter Number')
+}else if(num < 1){
+alert('Please enter Num greater than 0')
+}else if(num > 100){
+alert('Please Enter a number btw 1 to 100')
+}else{
+prevGuess.push(num)
+console.log(prevGuess)
+if(count === 11){
+  displayguess(num)
+   displaymessage(`Game over .Randam number was ${randnum}`)
+   endgame()
+}else{
+  displayguess(num);
+  checkGuess(num)
+}
+} 
+}
+ 
+
+function checkGuess(a){
+  if(a === randnum){
+    displaymessage( `you can right number`)
+  }else {
+    console.log('You loose the game')
+  }
+}
+
+function displayguess(num){
+  user.value = ''
+  guessSlot.innerHTML += ` ${num}`
+   count++;
+   //console.log(count++)
+   remaining.innerHTML = `${11 - count}`
+}
+
+function displaymessage(message){
+ LoworHi.innerHTML = `<h2>${message}</h2>`
+}
+  function endgame(){
+     user.value = ''
+     user.setAttribute('disabled','');
+     p.classList.add('button');
+     p.innerHTML = `<h2 id="newGame">Start new game</h2>`;
+    startOver.appendChild(p)
+    playgame = false 
+    newGame()
+    
+  }
+
+  function newGame(){
+    const newGamebutton = document.querySelector('#newGame')
+    newGamebutton.addEventListener('click',()=>{
+      playgame = true; 
+    })
+  }
+
+
+
+
+    </script>
+</body>
+</html>
